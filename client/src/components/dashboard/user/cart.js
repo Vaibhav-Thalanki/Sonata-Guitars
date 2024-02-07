@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import CartDetail from "./cartDetail";
 import { userRemoveFromCart } from "store/actions/user.actions";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { userPurchaseSuccess } from "store/actions/user.actions"; 
+import { userPurchaseSuccess } from "store/actions/user.actions";
+import { useNavigate } from "react-router-dom";
 
 import Loader from "utils/loader";
 
 const UserCart = (props) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const notifications = useSelector((state) => state.notifications);
   const dispatch = useDispatch();
@@ -25,36 +27,42 @@ const UserCart = (props) => {
     return total;
   };
 
-  const generateUnits = () => (
-    [{
-        description:"Guitars and accessories",
-        amount:{
-            currency_code:"USD",
-            value:calculateTotal(),
-            breakdown:{
-                item_total:{
-                    currency_code:"USD",
-                    value:calculateTotal()
-                }
-            }
+  const generateUnits = () => [
+    {
+      description: "Guitars and accessories",
+      amount: {
+        currency_code: "USD",
+        value: calculateTotal(),
+        breakdown: {
+          item_total: {
+            currency_code: "USD",
+            value: calculateTotal(),
+          },
         },
-        items:generateItems()
-    }]
-);
+      },
+      items: generateItems(),
+    },
+  ];
 
-const generateItems = () => {
-    let items = props.users.cart.map((item)=>(
-        {
-            unit_amount:{
-                currency_code:"USD",
-                value: item.price
-            },
-            quantity:1,
-            name: item.model
-        }
-    ));
-    return items
-}
+  const generateItems = () => {
+    let items = props.users.cart.map((item) => ({
+      unit_amount: {
+        currency_code: "USD",
+        value: item.price,
+      },
+      quantity: 1,
+      name: item.model,
+    }));
+    return items;
+  };
+  useEffect(() => {
+    if (notifications && notifications.success) {
+      navigate("/dashboard");
+    }
+    if (notifications && notifications.error) {
+      setLoading(false);
+    }
+  }, [notifications, navigate]);
 
   return (
     <>
@@ -81,21 +89,19 @@ const generateItems = () => {
                   }}
                 >
                   <PayPalButtons
-                    createOrder={(data,actions)=>{
-                    
-                                return actions.order.create({
-                                   purchase_units: generateUnits()
-                                })
-                            }}
-                            
-                            onApprove={(details)=>{
-                                console.log(details)
-                                setLoading(true);
-                                dispatch(userPurchaseSuccess(details.orderID))
-                            }}
-                            onCancel={(data)=>{
-                              setLoading(false)
-                            }}
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: generateUnits(),
+                      });
+                    }}
+                    onApprove={(details) => {
+                      console.log(details);
+                      setLoading(true);
+                      dispatch(userPurchaseSuccess(details.orderID));
+                    }}
+                    onCancel={(data) => {
+                      setLoading(false);
+                    }}
                   />
                 </PayPalScriptProvider>
               </div>

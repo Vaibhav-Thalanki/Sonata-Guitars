@@ -6,10 +6,14 @@ import EmailIcon from "@mui/icons-material/Email";
 import { useSelector } from "react-redux";
 
 const Footer = () => {
+  const site = useSelector(state=>state.site)
   return (
     <footer className="bck_b_dark">
       <div className="container">
         <div className="logo">Sonata</div>
+        {site && site.vars ? 
+        
+        <>
         <div className="wrapper">
           <div className="left">
             <h2>Contact Information</h2>
@@ -19,7 +23,7 @@ const Footer = () => {
 
                 <div className="nfo">
                   <div>Address</div>
-                  <div>Brooklyn Avenue, NYC</div>
+                  <div>{site.vars.address}</div>
                 </div>
               </div>
               <div className="tag">
@@ -27,7 +31,7 @@ const Footer = () => {
 
                 <div className="nfo">
                   <div>Phone</div>
-                  <div>878612639</div>
+                  <div>{site.vars.phone}</div>
                 </div>
               </div>
               <div className="tag">
@@ -35,7 +39,7 @@ const Footer = () => {
 
                 <div className="nfo">
                   <div>Working Hours</div>
-                  <div>Always Open</div>
+                  <div>{site.vars.hours}</div>
                 </div>
               </div>
               <div className="tag">
@@ -43,7 +47,7 @@ const Footer = () => {
 
                 <div className="nfo">
                   <div>Email</div>
-                  <div>sonata@gmail.com</div>
+                  <div>{site.vars.email}</div>
                 </div>
               </div>              
             </div>
@@ -55,6 +59,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        </>
+        :null}
+        
       </div>
     </footer>
   );

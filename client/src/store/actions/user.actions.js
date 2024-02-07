@@ -52,6 +52,9 @@ export const userLogin = (values) => {
 export const userIsAuth = () => {
   return async (dispatch) => {
     try {
+      const site = await axios.get("/api/site");
+      dispatch(actions.getSiteVars(site.data));
+
       if (!getTokenCookie()) {
         throw new Error();
       }
@@ -144,7 +147,7 @@ export const userRemoveFromCart = (position) => {
   return async (dispatch, getState) => {
     try {
       const cart = getState().users.cart;
-      cart.splice(position,1);
+      cart.splice(position, 1);
 
       dispatch(actions.userAddCart(cart)); // can use same dispatch
       dispatch(actions.successGlobal(`Removed From Cart!`));
@@ -154,16 +157,18 @@ export const userRemoveFromCart = (position) => {
   };
 };
 
-export const userPurchaseSuccess = (orderId)=>{
+export const userPurchaseSuccess = (orderId) => {
   return async (dispatch, getState) => {
     try {
-      const user = await axios.post('/api/transaction/',{orderId},
-      getAuthHeader())
+      const user = await axios.post(
+        "/api/transaction/",
+        { orderId },
+        getAuthHeader()
+      );
       dispatch(actions.successGlobal(`Payment Success`));
-      dispatch(actions.userPurchaseSuccess(user.data))
-    }
-    catch (error) {
+      dispatch(actions.userPurchaseSuccess(user.data));
+    } catch (error) {
       dispatch(actions.errorGlobal(error.response.data.message));
     }
-  }
-}
+  };
+};

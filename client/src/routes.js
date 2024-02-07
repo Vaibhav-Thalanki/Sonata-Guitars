@@ -16,6 +16,7 @@ import AddProduct from "components/dashboard/admin/products/addedit/add";
 import EditProduct from "components/dashboard/admin/products/addedit/editProduct";
 import ProductDetail from "components/product";
 import UserCart from "components/dashboard/user/cart";
+import ManageSite from "components/dashboard/admin/site";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userIsAuth,userSignOut } from "store/actions/user.actions";
@@ -63,6 +64,8 @@ const MainRoute = (props) => {
               <Route path="sign_in" element={<RegisterLogin />} />
               
               <Route path="/dashboard/user/user_cart" element={<AuthGaurd><UserCart /></AuthGaurd>} />
+
+              <Route path="/dashboard/admin/manage_site" element={<AuthGaurd><ManageSite /></AuthGaurd>} />
 
               <Route path="/" element={<Home />} />
             </Routes>
