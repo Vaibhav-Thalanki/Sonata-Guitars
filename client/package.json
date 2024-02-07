@@ -58,7 +58,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001",
   "overrides": {
     "autoprefixer": "10.4.5"
   },
