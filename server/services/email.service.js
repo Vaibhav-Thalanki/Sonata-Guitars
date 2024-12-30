@@ -30,7 +30,7 @@ const registerEmail = async(userEmail,user)=>{
                     button:{
                         color: '#1a73e8',
                         text: 'Validate',
-                        link: `${process.env.SITE_DOMAIN}verification?t=${emailToken}`
+                        link: `${process.env.EMAIL_MAIL_URL}users/verify?validation=${emailToken}`
 
                     }
                 },

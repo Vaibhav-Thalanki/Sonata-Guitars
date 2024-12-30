@@ -10,7 +10,7 @@ const passport = require("passport");
 const { jwtStrategy } = require("./middleware/passport");
 const path = require("path");
 
-const mongoUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}?retryWrites=true&w=majority`;
+const mongoUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/?retryWrites=true&w=majority&appName=Cluster0`;
 
 mongoose.connect(mongoUri);
 

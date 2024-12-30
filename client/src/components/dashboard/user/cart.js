@@ -83,7 +83,7 @@ const UserCart = (props) => {
                 <PayPalScriptProvider
                   options={{
                     clientId:
-                      "Af6eX_yaGFYOr1M8PpmUvKPo-Xk3IKB_njvSxsTtG6CLJIQR1wA40LZTb9RpxmccdJpJl8OPSetWuGjh",
+                      'AbZFmlrAJjTHLlLynl8k0s9B_2cMSs14HyVfZyP0oK4KKTjBXGCCaTBwVnGjSR84dIFTHTX2QL7HPkwz',
                     currency: "USD",
                     disableFunding: "credit,card",
                   }}

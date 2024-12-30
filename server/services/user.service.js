@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const validateEmailToken = async(token)=>{
-    return jwt.verify(token, process.env.DB_SECRET)
+    return jwt.verify(token, process.env.SECRET)
 }
 
 const findUserByEmail = async(email) =>{
