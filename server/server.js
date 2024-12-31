@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
 
 // for deployment
 
-
+app.get("/", (req, res) => res.send("Express on Vercel"))
 
 if (process.env.NODE_ENV === "production") {
 
