@@ -8,7 +8,9 @@ let transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL,
         pass: process.env.E_PASS
-    }
+    },
+    logger: true, // Enable logging
+    debug: true,  // Include debug output
 })
 
 const registerEmail = async(userEmail,user)=>{
@@ -37,12 +39,8 @@ const registerEmail = async(userEmail,user)=>{
                 outro: 'Need help? Just reply to this email and we\'ll help you out!'
             }
         }
-        let emailBody = mailGenerator.generate(email);
-        console.log(process.env.EMAIL);
-        console.log(userEmail);
-        console.log(process.env.EMAIL_MAIL_URL);
-        
-        
+        let emailBody = await mailGenerator.generate(email);
+        console.log(emailBody);        
         let message = {
             from: process.env.EMAIL,
             to: userEmail,
@@ -56,6 +54,7 @@ const registerEmail = async(userEmail,user)=>{
     }
     catch(err)
     {
+        console.error("Error sending email:", err);
         throw err
     }
 }
