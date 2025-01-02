@@ -1,5 +1,6 @@
 import * as actions from './index';
 import axios from "axios"
+import { Server_API } from 'constants/apiConstants';
 import { getAuthHeader, removeTokenCookie, getTokenCookie } from "utils/tools";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -9,7 +10,7 @@ axios.defaults.headers.patch["Content-Type"] = "application/json";
 export const productsBySort = ({ limit,sortBy,order}) => {
     return async(dispatch)=>{
         try{
-            const products = await axios.get(`/api/products/all`,{
+            const products = await axios.get(Server_API+`api/products/all`,{
                 params:{
                     limit,
                     sortBy,
@@ -35,7 +36,7 @@ export const productsBySort = ({ limit,sortBy,order}) => {
 export const productsByPaginate= (args)=>{
     return async(dispatch)=>{
         try{
-            const products = await axios.post('/api/products/paginate/all',args)
+            const products = await axios.post(Server_API+'api/products/paginate/all',args)
            
             dispatch(actions.productsByPaginate(products.data))
         }
@@ -48,7 +49,7 @@ export const productsByPaginate= (args)=>{
 export const productsById = (id)=>{
     return async(dispatch)=>{
         try{
-            const product = await axios.get(`/api/products/product/${id}`)
+            const product = await axios.get(Server_API+`api/products/product/${id}`)
             dispatch(actions.productsById(product.data))
         }
         catch(error){
@@ -61,7 +62,7 @@ export const productsById = (id)=>{
 export const productRemove = (id) =>{
     return async(dispatch)=>{
         try{
-            await axios.delete(`/api/products/product/${id}`,getAuthHeader())
+            await axios.delete(Server_API+`api/products/product/${id}`,getAuthHeader())
             dispatch(actions.productRemove())
             dispatch(actions.successGlobal())
         }
@@ -74,7 +75,7 @@ export const productRemove = (id) =>{
 export const productAdd = (prod) =>{
     return async(dispatch)=>{
         try{
-            const product = await axios.post('/api/products',prod,getAuthHeader())
+            const product = await axios.post(Server_API+'api/products',prod,getAuthHeader())
             dispatch(actions.productAdd(product.data))
             dispatch(actions.successGlobal('Product Added'))
 
@@ -88,7 +89,7 @@ export const productAdd = (prod) =>{
 export const productEdit  =(values,id) =>{
     return async(dispatch)=>{
         try{
-             await axios.patch(`/api/products/product/${id}`,values,getAuthHeader())
+             await axios.patch(Server_API+`api/products/product/${id}`,values,getAuthHeader())
           
             dispatch(actions.successGlobal('Update done'))
 

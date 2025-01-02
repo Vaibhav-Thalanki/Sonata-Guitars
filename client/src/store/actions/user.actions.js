@@ -1,5 +1,6 @@
 import * as actions from "./index";
 import axios from "axios";
+import { Server_API } from "constants/apiConstants";
 import { getAuthHeader, removeTokenCookie, getTokenCookie } from "utils/tools";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -8,7 +9,7 @@ axios.defaults.headers.patch["Content-Type"] = "application/json";
 export const userRegister = (values) => {
   return async (dispatch) => {
     try {
-      const user = await axios.post("/api/auth/register", {
+      const user = await axios.post(Server_API+"api/auth/register", {
         email: values.email,
         password: values.password,
       });
@@ -31,7 +32,7 @@ export const userRegister = (values) => {
 export const userLogin = (values) => {
   return async (dispatch) => {
     try {
-      const user = await axios.post("/api/auth/signin", {
+      const user = await axios.post(Server_API+"api/auth/signin", {
         email: values.email,
         password: values.password,
       });
@@ -52,13 +53,13 @@ export const userLogin = (values) => {
 export const userIsAuth = () => {
   return async (dispatch) => {
     try {
-      const site = await axios.get("/api/site");
+      const site = await axios.get(Server_API+"api/site");
       dispatch(actions.getSiteVars(site.data));
 
       if (!getTokenCookie()) {
         throw new Error();
       }
-      const user = await axios.get("/api/auth/isauth", getAuthHeader());
+      const user = await axios.get(Server_API+"api/auth/isauth", getAuthHeader());
 
       dispatch(
         actions.userAuthenticate({
@@ -88,7 +89,7 @@ export const userUpdateProfile = (data) => {
   return async (dispatch, getState) => {
     try {
       let profile = await axios.patch(
-        "/api/users/profile",
+        Server_API+"api/users/profile",
         { ...data },
         getAuthHeader()
       );
@@ -110,7 +111,7 @@ export const userChangeEmail = (data) => {
   return async (dispatch) => {
     try {
       await axios.patch(
-        "/api/users/email",
+        Server_API+"api/users/email",
         {
           email: data.email,
           newemail: data.newemail,
@@ -161,7 +162,7 @@ export const userPurchaseSuccess = (orderId) => {
   return async (dispatch, getState) => {
     try {
       const user = await axios.post(
-        "/api/transaction/",
+        Server_API+"api/transaction/",
         { orderId },
         getAuthHeader()
       );

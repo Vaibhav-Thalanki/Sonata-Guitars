@@ -7,6 +7,7 @@ import { getTokenCookie } from "utils/tools";
 import Loader from "utils/loader";
 import { useDispatch } from "react-redux";
 import * as actions from '../../../../../store/actions';
+import { Server_API } from "constants/apiConstants";
 
 const PicUpload = ({picValue}) =>{
     const dispatch = useDispatch()
@@ -21,7 +22,7 @@ const PicUpload = ({picValue}) =>{
             let formData = new FormData();
             formData.append("file", values.pic);
 
-            axios.post(`/api/products/upload`,formData,{
+            axios.post(Server_API+`api/products/upload`,formData,{
                 headers:{
                     'content-type':'multipart/form-data',
                     'Authorization':`Bearer ${getTokenCookie()}`
