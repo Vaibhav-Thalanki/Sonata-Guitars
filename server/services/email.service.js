@@ -8,9 +8,7 @@ let transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL,
         pass: process.env.E_PASS
-    },
-    logger: true, // Enable logging
-    debug: true,  // Include debug output
+    }
 })
 
 const registerEmail = async(userEmail,user)=>{
@@ -40,7 +38,7 @@ const registerEmail = async(userEmail,user)=>{
             }
         }
         let emailBody = await mailGenerator.generate(email);
-        console.log(emailBody);        
+           
         let message = {
             from: process.env.EMAIL,
             to: userEmail,
@@ -49,7 +47,6 @@ const registerEmail = async(userEmail,user)=>{
         }
         await transporter.sendMail(message)
         return true
-
 
     }
     catch(err)

@@ -12,10 +12,8 @@ const authController = {
       const token = await authService.genAuthToken(user);
 
       // send register email 
-      emailService.registerEmail(email,user);
-      console.log("email sent????");
-      
-
+      await emailService.registerEmail(email,user);
+  
       res.cookie('x-access-token',token).status(httpStatus.CREATED).send({
         user,
         token
