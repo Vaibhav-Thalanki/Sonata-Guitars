@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
+const cors = require('cors')
 const routes = require("./routes");
 //require("dotenv").config();
 const { handleError, convertToApiError } = require("./middleware/apiError");
@@ -14,6 +15,7 @@ const mongoUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
 
 mongoose.connect(mongoUri);
 
+app.use(cors());
 // body parser
 app.use(express.json());
 // sanitize - middlewares
