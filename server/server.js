@@ -5,7 +5,7 @@ const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
 const cors = require('cors')
 const routes = require("./routes");
-//require("dotenv").config();
+require("dotenv").config();
 const { handleError, convertToApiError } = require("./middleware/apiError");
 const passport = require("passport");
 const { jwtStrategy } = require("./middleware/passport");

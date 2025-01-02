@@ -30,7 +30,7 @@ const registerEmail = async(userEmail,user)=>{
                     button:{
                         color: '#1a73e8',
                         text: 'Validate',
-                        link: `${process.env.EMAIL_MAIL_URL}users/verify?validation=${emailToken}`
+                        link: `${process.env.EMAIL_MAIL_URL}/api/users/verify?validation=${emailToken}`
 
                     }
                 },
@@ -38,6 +38,11 @@ const registerEmail = async(userEmail,user)=>{
             }
         }
         let emailBody = mailGenerator.generate(email);
+        console.log(process.env.EMAIL);
+        console.log(userEmail);
+        console.log(process.env.EMAIL_MAIL_URL);
+        
+        
         let message = {
             from: process.env.EMAIL,
             to: userEmail,

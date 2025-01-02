@@ -13,6 +13,8 @@ const authController = {
 
       // send register email 
       emailService.registerEmail(email,user);
+      console.log("email sent????");
+      
 
       res.cookie('x-access-token',token).status(httpStatus.CREATED).send({
         user,
