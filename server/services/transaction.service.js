@@ -24,6 +24,8 @@ const addTransaction  =async (req)=>{
             date:new Date(order.headers.date)
         });
         await transaction.save()
+        console.log(req.user);
+        
         const user = await User.findOneAndUpdate(
             {_id: req.user._id},
             { "$push":{
